@@ -1,0 +1,83 @@
+/* ==========================================
+   1. CHẾ ĐỘ VIEW DI ĐỘNG (Mobile First - Mặc định)
+   Dùng CSS Grid 1 cột, khoảng cách 10px giữa hàng và cột
+   ========================================== */
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* Đảm bảo hình ảnh co giãn tốt trong khung */
+figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================
+   2. TRUY VẤN PHƯƠNG TIỆN #1: Tablet View (>= 772px)
+   Lưới 2 cột, bo tròn hình figure, figure cuối cùng rộng 2 cột
+   ========================================== */
+@media screen and (min-width: 772px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  figure {
+    border-radius: 50%;
+    overflow: hidden; /* Giúp ảnh bo tròn mượt mà theo khung */
+  }
+
+  figure:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* ==========================================
+   3. TRUY VẤN PHƯƠNG TIỆN #2: Màn hình lớn (>= 992px)
+   Mỗi figure thứ 3 chiếm 2 cột, xóa bo tròn đường viền
+   ========================================== */
+@media screen and (min-width: 992px) {
+  /* Reset lại vị trí của figure cuối cùng */
+  figure:last-child {
+    grid-column: auto;
+  }
+
+  /* Cứ figure thứ 3 (3, 6, 9,...) sẽ chiếm 2 cột */
+  figure:nth-child(3n) {
+    grid-column: span 2;
+  }
+
+  /* Xóa bỏ bo tròn trên tất cả các figure */
+  figure {
+    border-radius: 0;
+  }
+}
+
+/* ==========================================
+   4. TRUY VẤN PHƯƠNG TIỆN #3: Giảm chuyển động (Prefers Reduced Motion)
+   Xóa hành vi cuộn mượt và chuyển động hiệu ứng
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================
+   5. TRUY VẤN PHƯƠNG TIỆN #4: Chế độ tối (Prefers Dark Scheme)
+   Nền tối, chữ sáng (màu vàng nhạt), viền màu đen
+   ========================================== */
+@media (prefers-color-scheme: dark) {
+  figure {
+    background-color: #222222;
+    color: #ffff80; /* Màu vàng nhạt đủ tương phản đạt chuẩn WAVE */
+    border: 2px solid #000000;
+  }
+}
